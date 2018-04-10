@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zm.employee.dao.TaskMapper">
+  <resultMap id="BaseResultMap" type="com.zm.employee.bean.Task">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tclass" jdbcType="INTEGER" property="tclass" />
+    <result column="tnmae" jdbcType="VARCHAR" property="tnmae" />
+    <result column="tcontent" jdbcType="VARCHAR" property="tcontent" />
+    <result column="tdate" jdbcType="VARCHAR" property="tdate" />
+    <result column="target" jdbcType="VARCHAR" property="target" />
+    <result column="tadmin" jdbcType="VARCHAR" property="tadmin" />
+    <result column="tdesc" jdbcType="VARCHAR" property="tdesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, tclass, tnmae, tcontent, tdate, target, tadmin, tdesc
+  </sql>
+  <select id="selectByExample" parameterType="com.zm.employee.bean.TaskExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_task
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zm.employee.bean.TaskExample">
+    delete from tb_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zm.employee.bean.Task">
+    insert into tb_task (id, tclass, tnmae, 
+      tcontent, tdate, target, 
+      tadmin, tdesc)
+    values (#{id,jdbcType=INTEGER}, #{tclass,jdbcType=INTEGER}, #{tnmae,jdbcType=VARCHAR}, 
+      #{tcontent,jdbcType=VARCHAR}, #{tdate,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR}, 
+      #{tadmin,jdbcType=VARCHAR}, #{tdesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zm.employee.bean.Task">
+    insert into tb_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tclass != null">
+        tclass,
+      </if>
+      <if test="tnmae != null">
+        tnmae,
+      </if>
+      <if test="tcontent != null">
+        tcontent,
+      </if>
+      <if test="tdate != null">
+        tdate,
+      </if>
+      <if test="target != null">
+        target,
+      </if>
+      <if test="tadmin != null">
+        tadmin,
+      </if>
+      <if test="tdesc != null">
+        tdesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tclass != null">
+        #{tclass,jdbcType=INTEGER},
+      </if>
+      <if test="tnmae != null">
+        #{tnmae,jdbcType=VARCHAR},
+      </if>
+      <if test="tcontent != null">
+        #{tcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="tdate != null">
+        #{tdate,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null">
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="tadmin != null">
+        #{tadmin,jdbcType=VARCHAR},
+      </if>
+      <if test="tdesc != null">
+        #{tdesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zm.employee.bean.TaskExample" resultType="java.lang.Long">
+    select count(*) from tb_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_task
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.tclass != null">
+        tclass = #{record.tclass,jdbcType=INTEGER},
+      </if>
+      <if test="record.tnmae != null">
+        tnmae = #{record.tnmae,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tcontent != null">
+        tcontent = #{record.tcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tdate != null">
+        tdate = #{record.tdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.target != null">
+        target = #{record.target,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tadmin != null">
+        tadmin = #{record.tadmin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tdesc != null">
+        tdesc = #{record.tdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_task
+    set id = #{record.id,jdbcType=INTEGER},
+      tclass = #{record.tclass,jdbcType=INTEGER},
+      tnmae = #{record.tnmae,jdbcType=VARCHAR},
+      tcontent = #{record.tcontent,jdbcType=VARCHAR},
+      tdate = #{record.tdate,jdbcType=VARCHAR},
+      target = #{record.target,jdbcType=VARCHAR},
+      tadmin = #{record.tadmin,jdbcType=VARCHAR},
+      tdesc = #{record.tdesc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zm.employee.bean.Task">
+    update tb_task
+    <set>
+      <if test="tclass != null">
+        tclass = #{tclass,jdbcType=INTEGER},
+      </if>
+      <if test="tnmae != null">
+        tnmae = #{tnmae,jdbcType=VARCHAR},
+      </if>
+      <if test="tcontent != null">
+        tcontent = #{tcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="tdate != null">
+        tdate = #{tdate,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null">
+        target = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="tadmin != null">
+        tadmin = #{tadmin,jdbcType=VARCHAR},
+      </if>
+      <if test="tdesc != null">
+        tdesc = #{tdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zm.employee.bean.Task">
+    update tb_task
+    set tclass = #{tclass,jdbcType=INTEGER},
+      tnmae = #{tnmae,jdbcType=VARCHAR},
+      tcontent = #{tcontent,jdbcType=VARCHAR},
+      tdate = #{tdate,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR},
+      tadmin = #{tadmin,jdbcType=VARCHAR},
+      tdesc = #{tdesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

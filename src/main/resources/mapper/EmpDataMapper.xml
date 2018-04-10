@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zm.employee.dao.EmpDataMapper">
+  <resultMap id="BaseResultMap" type="com.zm.employee.bean.EmpData">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="empId" jdbcType="INTEGER" property="empid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birth" jdbcType="VARCHAR" property="birth" />
+    <result column="high" jdbcType="INTEGER" property="high" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="ethnic" jdbcType="VARCHAR" property="ethnic" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="studyBg" jdbcType="VARCHAR" property="studybg" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="ps" jdbcType="VARCHAR" property="ps" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="myAbility" jdbcType="VARCHAR" property="myability" />
+    <result column="mySpeciality" jdbcType="VARCHAR" property="myspeciality" />
+    <result column="myTeach" jdbcType="VARCHAR" property="myteach" />
+    <result column="myIdea" jdbcType="VARCHAR" property="myidea" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="empDesc" jdbcType="VARCHAR" property="empdesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, empId, name, sex, birth, high, area, ethnic, school, studyBg, major, ps, qq, 
+    tel, mail, myAbility, mySpeciality, myTeach, myIdea, img, empDesc
+  </sql>
+  <select id="selectByExample" parameterType="com.zm.employee.bean.EmpDataExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_empdata
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_empdata
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_empdata
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zm.employee.bean.EmpDataExample">
+    delete from tb_empdata
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zm.employee.bean.EmpData">
+    insert into tb_empdata (id, empId, name, 
+      sex, birth, high, area, 
+      ethnic, school, studyBg, 
+      major, ps, qq, tel, 
+      mail, myAbility, mySpeciality, 
+      myTeach, myIdea, img, 
+      empDesc)
+    values (#{id,jdbcType=INTEGER}, #{empid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{birth,jdbcType=VARCHAR}, #{high,jdbcType=INTEGER}, #{area,jdbcType=VARCHAR}, 
+      #{ethnic,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{studybg,jdbcType=VARCHAR}, 
+      #{major,jdbcType=VARCHAR}, #{ps,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{mail,jdbcType=VARCHAR}, #{myability,jdbcType=VARCHAR}, #{myspeciality,jdbcType=VARCHAR}, 
+      #{myteach,jdbcType=VARCHAR}, #{myidea,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
+      #{empdesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zm.employee.bean.EmpData">
+    insert into tb_empdata
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="empid != null">
+        empId,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birth != null">
+        birth,
+      </if>
+      <if test="high != null">
+        high,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="ethnic != null">
+        ethnic,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="studybg != null">
+        studyBg,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="ps != null">
+        ps,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="mail != null">
+        mail,
+      </if>
+      <if test="myability != null">
+        myAbility,
+      </if>
+      <if test="myspeciality != null">
+        mySpeciality,
+      </if>
+      <if test="myteach != null">
+        myTeach,
+      </if>
+      <if test="myidea != null">
+        myIdea,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="empdesc != null">
+        empDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="empid != null">
+        #{empid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        #{birth,jdbcType=VARCHAR},
+      </if>
+      <if test="high != null">
+        #{high,jdbcType=INTEGER},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="ethnic != null">
+        #{ethnic,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="studybg != null">
+        #{studybg,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="ps != null">
+        #{ps,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="myability != null">
+        #{myability,jdbcType=VARCHAR},
+      </if>
+      <if test="myspeciality != null">
+        #{myspeciality,jdbcType=VARCHAR},
+      </if>
+      <if test="myteach != null">
+        #{myteach,jdbcType=VARCHAR},
+      </if>
+      <if test="myidea != null">
+        #{myidea,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="empdesc != null">
+        #{empdesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zm.employee.bean.EmpDataExample" resultType="java.lang.Long">
+    select count(*) from tb_empdata
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_empdata
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.empid != null">
+        empId = #{record.empid,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birth != null">
+        birth = #{record.birth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.high != null">
+        high = #{record.high,jdbcType=INTEGER},
+      </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ethnic != null">
+        ethnic = #{record.ethnic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null">
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studybg != null">
+        studyBg = #{record.studybg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major != null">
+        major = #{record.major,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ps != null">
+        ps = #{record.ps,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null">
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null">
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mail != null">
+        mail = #{record.mail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.myability != null">
+        myAbility = #{record.myability,jdbcType=VARCHAR},
+      </if>
+      <if test="record.myspeciality != null">
+        mySpeciality = #{record.myspeciality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.myteach != null">
+        myTeach = #{record.myteach,jdbcType=VARCHAR},
+      </if>
+      <if test="record.myidea != null">
+        myIdea = #{record.myidea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img != null">
+        img = #{record.img,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empdesc != null">
+        empDesc = #{record.empdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_empdata
+    set id = #{record.id,jdbcType=INTEGER},
+      empId = #{record.empid,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      birth = #{record.birth,jdbcType=VARCHAR},
+      high = #{record.high,jdbcType=INTEGER},
+      area = #{record.area,jdbcType=VARCHAR},
+      ethnic = #{record.ethnic,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      studyBg = #{record.studybg,jdbcType=VARCHAR},
+      major = #{record.major,jdbcType=VARCHAR},
+      ps = #{record.ps,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      mail = #{record.mail,jdbcType=VARCHAR},
+      myAbility = #{record.myability,jdbcType=VARCHAR},
+      mySpeciality = #{record.myspeciality,jdbcType=VARCHAR},
+      myTeach = #{record.myteach,jdbcType=VARCHAR},
+      myIdea = #{record.myidea,jdbcType=VARCHAR},
+      img = #{record.img,jdbcType=VARCHAR},
+      empDesc = #{record.empdesc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zm.employee.bean.EmpData">
+    update tb_empdata
+    <set>
+      <if test="empid != null">
+        empId = #{empid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        birth = #{birth,jdbcType=VARCHAR},
+      </if>
+      <if test="high != null">
+        high = #{high,jdbcType=INTEGER},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="ethnic != null">
+        ethnic = #{ethnic,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="studybg != null">
+        studyBg = #{studybg,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="ps != null">
+        ps = #{ps,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="myability != null">
+        myAbility = #{myability,jdbcType=VARCHAR},
+      </if>
+      <if test="myspeciality != null">
+        mySpeciality = #{myspeciality,jdbcType=VARCHAR},
+      </if>
+      <if test="myteach != null">
+        myTeach = #{myteach,jdbcType=VARCHAR},
+      </if>
+      <if test="myidea != null">
+        myIdea = #{myidea,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="empdesc != null">
+        empDesc = #{empdesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zm.employee.bean.EmpData">
+    update tb_empdata
+    set empId = #{empid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=VARCHAR},
+      high = #{high,jdbcType=INTEGER},
+      area = #{area,jdbcType=VARCHAR},
+      ethnic = #{ethnic,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      studyBg = #{studybg,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      ps = #{ps,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      myAbility = #{myability,jdbcType=VARCHAR},
+      mySpeciality = #{myspeciality,jdbcType=VARCHAR},
+      myTeach = #{myteach,jdbcType=VARCHAR},
+      myIdea = #{myidea,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
+      empDesc = #{empdesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

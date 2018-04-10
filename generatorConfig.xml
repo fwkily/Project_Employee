@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+  
+  
+<generatorConfiguration>
+
+	<!-- 指定mysql的jar 否则EClipse的逆向工程工具报错  且路径不能为中文-->
+	<classPathEntry
+		location="C:\Java\eclipse\workspace\_MyBatis3.4Study_07_mbg\lib\mysql-connector-java-5.1.7-bin.jar" />
+
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+
+		<!-- 禁止生成注释 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+
+		<!-- 配置数据库连接信息 -->
+		<jdbcConnection connectionURL="jdbc:mysql://127.0.0.1:3306/project_employee"
+			driverClass="com.mysql.jdbc.Driver" password="root" userId="root" />
+
+		<!-- 指定生成的javaBean的位置  写全工程名  不然EClipse的Mybatis插件不识别 -->
+		<javaModelGenerator targetPackage="com.zm.employee.bean"
+			targetProject="Project_Employee/src/main/java" />
+
+		<!-- 指定mapper映射文件生成的位置 -->
+		<sqlMapGenerator targetPackage="mapper" targetProject="Project_Employee/src/main/resources" />
+
+		<!-- 指定dao接口生成的位置 -->
+		<javaClientGenerator targetPackage="com.zm.employee.dao"
+			targetProject="Project_Employee/src/main/java" type="XMLMAPPER" />
+
+		<!-- 指定每个表的生成策略 -->
+		<table tableName="tb_emp" domainObjectName="Employee" />
+
+	</context>
+</generatorConfiguration>

@@ -1,0 +1,8 @@
+ //JSR303校验  自定�? 规则
+    @Pattern(regexp = "(^[a-z0-9_-]{3,16})|(^[\u2E80-\u9FFF]{2,5})",message="用户名必须是3~16位英文或者是2~5位汉字组�?")
+    private String empName;
+
+    private String gender;
+
+    //@Email
+    @Pattern(regexp = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$",message="邮箱格式有误")
