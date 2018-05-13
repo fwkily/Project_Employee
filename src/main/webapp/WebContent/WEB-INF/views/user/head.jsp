@@ -215,7 +215,7 @@
 						class="icon-bar"></span>
 				</button>
 
-				<a class="navbar-brand" href="l"
+				<a class="navbar-brand" href="i"
 					style="line-height: 28px; font: 20px;">人事管理系统</a>
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
@@ -254,12 +254,12 @@
 						</span>
 					</p>
 				</li>
-				<li><a href="i"> <span class="glyphicon glyphicon-th"></span>
+				<li><a href="${path}/user/i"> <span class="glyphicon glyphicon-th"></span>
 						信息总览
 				</a></li>
 				<li><a href="z"><span class="glyphicon glyphicon-signal"></span>
 						我的资料</a></li>
-				<li><a href="k"><span class="glyphicon glyphicon-user"></span>
+				<li><a href="${path}/user/k"><span class="glyphicon glyphicon-user"></span>
 						模拟打卡</a></li>
 				<li><a href="${path }/user/t"><span
 						class="glyphicon glyphicon-home"></span> 查看任务</a></li>

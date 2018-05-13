@@ -254,13 +254,13 @@
 						</span>
 					</p>
 				</li>
-				<li><a  href="i"> <span class="glyphicon glyphicon-th"></span> 信息总览</a></li>
+				<li><a  href="${path}/i"> <span class="glyphicon glyphicon-th"></span> 信息总览</a></li>
 				<li><a href="${path}/l"><span class="glyphicon glyphicon-user"></span> 员工管理</a></li>
-				<li><a href="d"><span class="glyphicon glyphicon-home"></span> 部门管理</a></li>
-				<li><a href="k"><span class="glyphicon glyphicon-briefcase"></span> 考勤管理</a></li>
-				<li><a href="z"><span class="glyphicon glyphicon-signal"></span> 资料管理</a></li>
-				<li><a href="g"><span class="glyphicon glyphicon-bookmark"></span> 公告管理</a></li>
-				<li><a href="w"><span class="glyphicon glyphicon-tag"></span> 留言管理</a></li>
+				<li><a href="${path}/d"><span class="glyphicon glyphicon-home"></span> 部门管理</a></li>
+				<li><a href="${path}/k"><span class="glyphicon glyphicon-briefcase"></span> 考勤管理</a></li>
+				<li><a href="${path}/z"><span class="glyphicon glyphicon-signal"></span> 资料管理</a></li>
+				<li><a href="${path}/g"><span class="glyphicon glyphicon-bookmark"></span> 公告管理</a></li>
+				<li><a href="${path}/w"><span class="glyphicon glyphicon-tag"></span> 留言管理</a></li>
 				<li><a href="${path}/a"><span class="glyphicon glyphicon-asterisk"></span> 管理员管理</a></li>
 				<li class="has-sub"><a href="javascript:void(0);"><span><span class="glyphicon glyphicon-tasks"></span> 任务管理</span><span style="float: right;"
 						class="glyphicon glyphicon-chevron-right"></span></a>
