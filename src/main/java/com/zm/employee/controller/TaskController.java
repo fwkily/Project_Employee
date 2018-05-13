@@ -18,6 +18,7 @@ import com.zm.employee.bean.Admin;
 import com.zm.employee.bean.Employee;
 import com.zm.employee.bean.Msg;
 import com.zm.employee.bean.Task;
+import com.zm.employee.service.EmployeeService;
 import com.zm.employee.service.TaskService;
 
 @Controller
@@ -25,6 +26,9 @@ public class TaskController {
 
 	@Autowired
 	private TaskService service; 
+	@Autowired
+	private EmployeeService empService;
+	
 	
 	//查询
 	@ResponseBody
@@ -51,7 +55,27 @@ public class TaskController {
 	@ResponseBody
 	@RequestMapping(value = "task",method = RequestMethod.POST)
 	public Msg addW(Task t,HttpServletRequest req) {
-		System.out.println(t);
+		//检查每个员工是否存在
+		String ids = t.getTarget();
+		try {
+			if(ids.indexOf(",")!=-1) {
+				String[] split = ids.split(",");
+				for (String id : split) {
+					Employee empsById = empService.getEmpsById(Integer.parseInt(id));
+					if(empsById==null) {
+						return Msg.error().add("msg", "填写的员工ID不存在，请检查输入是否正确！");
+					}
+				}
+			}else {
+				Employee empsById = empService.getEmpsById(Integer.parseInt(ids));
+				if(empsById==null) {
+					return Msg.error().add("msg", "填写的员工ID不存在，请检查输入是否正确！");
+				}
+			}
+		} catch (Exception e) {
+				return Msg.error().add("msg", "请检查输入格式是否正确！");
+		}
+		
 		Admin admin = (Admin) req.getSession().getAttribute("admin");
 		service.addTask(t,admin.getAdminname());
 		return Msg.success();

@@ -34,7 +34,7 @@
                         <td width="166"><span class="name"></span></td>
                         <th width="166">性别</th>
                         <td width="166"><span id="sex"></span></td>
-                        <td width="174" rowspan="4"><img style="padding: 0px;margin: 0px;" id="img" width="170px" height="42%" alt="照片" src="" /></td>
+                        <td width="174" rowspan="4"><img style="padding: 0px;margin: 0px;" id="img" width="170px" height="155px" alt="照片" src="" /></td>
                     </tr>
                     <tr>
                         <th scope="row">出生年月</th>

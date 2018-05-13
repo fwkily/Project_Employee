@@ -144,36 +144,41 @@ $(document).ready(function() {
 					  
 					  $(document).on("click","#depts_add_ul li a",function(){
 						  var deptId = $(this).attr("value");
-						  $("#task_target").val( $("#task_target").val() + deptId + ",")
-					  })
+//						  $(this).empty();
+						  $("#task_target").val(deptId);
+					  });
 				  }
 			});
 		
-			$("#task_add_btn").click(function(){
-				if($("#tnmae").val()!=""&&$("#tconent").val()!=""&&$("#task_target").val()!=""){
-//				//发送请求
-				$.ajax({
-					url:"task",
-					method:"POST",
-					data:$("#task_add_form").serialize(),
-					success:function(result){
-						  $("#task_model").modal("hide");
-						  $("#msg_modal").modal("show");
-		                  $("#msg_modal_body").text(result.msg);
-		                  getTask(1);
-					}
-				});
-				}else{
-					alert("请填写完整！")
-				}
-			});
-			
-			
-			
 		});
-
-	
-	
+	});
+	//发布按钮被点击
+	$(document).on("click","#task_add_btn",function(){
+		if($("#tnmae").val()!=""&&$("#tconent").val()!=""&&$("#task_target").val()!=""){
+			var partten  = $("#task_target").val();
+			if(partten.indexOf("，")!=-1||partten.indexOf(" ")!=-1){
+				alert("格式不正确，请填写英文逗号.");
+				return;
+			}
+//		//发送请求
+		$.ajax({
+			url:"task",
+			method:"POST",
+			data:$("#task_add_form").serialize(),
+			success:function(result){
+				  $("#task_model").modal("hide");
+				  $("#msg_modal").modal("show");
+				  if(result.code == "200"){
+					  $("#msg_modal_body").text(result.msg);
+				  }else{
+					  $("#msg_modal_body").text(result.map.msg);
+				  }
+                  getTask(1);
+			}
+		});
+		}else{
+			alert("请填写完整！")
+		}
 	});
 /*************************全局方法结束******************************/	
 	//查询部门信息
