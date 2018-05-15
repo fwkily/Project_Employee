@@ -3,6 +3,8 @@ package com.zm.employee.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,13 @@ public class AdminService {
 
 	public void updateAdmin(Integer id, String pwd) {
 		// TODO Auto-generated method stub
-		mapper.updateByPrimaryKeySelective(new Admin(id, pwd));
+		Admin admin = mapper.selectByPrimaryKey(id);
+		//盐值加密  即把用户名加进去   再把MD5加密
+		ByteSource credentialsSalt = ByteSource.Util.bytes(admin.getAdminname());
+		//SimpleHash执行加密
+		SimpleHash simpleHash = new SimpleHash("MD5",pwd, credentialsSalt, 1024);
+		
+		mapper.updateByPrimaryKeySelective(new Admin(id, simpleHash.toString()));
 	}
 
 	//批量删除
@@ -76,11 +84,14 @@ public class AdminService {
 	}
 
 	public long updatePwd(String id, String oldPwd, String newPwd) {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+		Admin admin = mapper.selectByPrimaryKey(Integer.parseInt(id));
 		long keySelective = 0;
-		if(checkPwd(id, oldPwd)>0) {
-			keySelective = mapper.updateAdminPwd(Integer.parseInt(id.trim()), newPwd.trim());
+		if(checkPwd(admin,id, oldPwd)>0) {
+			//盐值加密  即把用户名加进去   再把MD5加密
+			ByteSource credentialsSalt = ByteSource.Util.bytes(admin.getAdminname());
+			//SimpleHash执行加密
+			SimpleHash simpleHash = new SimpleHash("MD5",newPwd, credentialsSalt, 1024);
+			keySelective = mapper.updateAdminPwd(Integer.parseInt(id.trim()), simpleHash.toString());
 			return keySelective;
 		}else {
 			return -1;
@@ -88,10 +99,16 @@ public class AdminService {
 	}
 	
 	//检查原密码是否正确
-		public int checkPwd(String id,String oldPwd) {
+		public int checkPwd(Admin admin,String id,String oldPwd) {
+			//加密验证
+			//盐值加密  即把用户名加进去   再把MD5加密
+			ByteSource credentialsSalt = ByteSource.Util.bytes(admin.getAdminname());
+			//SimpleHash执行加密
+			SimpleHash simpleHash = new SimpleHash("MD5",oldPwd, credentialsSalt, 1024);
+			
 			AdminExample example = new AdminExample();
 			Criteria criteria = example.createCriteria();
-			criteria.andAdminpwdEqualTo(oldPwd);
+			criteria.andAdminpwdEqualTo(simpleHash.toString());
 			criteria.andIdEqualTo(Integer.parseInt(id));
 			List<Admin> list = mapper.selectByExample(example);
 			return list.size();

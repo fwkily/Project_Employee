@@ -17,6 +17,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zm.employee.bean.Admin;
@@ -60,24 +61,25 @@ public class ShiroRealm extends AuthorizingRealm{
 		List<Admin> principal =  mapper.selectByExample(example);	
 		String credentials ="";
 		SimpleHash simpleHash = null;
+		String pwd = "";
 		if(principal.size()==0) {
 			//4 若用户不存在  抛出异常  这里异常不要往出抛 不然gg
 //			throw new UnknownAccountException("用户不存在");
 		}else {
 			//若存在   取出密码加密
 			//credentials 数据库密码   查出来再加密
-			String pwd = "";		//从List获取密码出来加密
+					//从List获取密码出来加密
 			for (Admin user : principal) {
 				pwd = user.getAdminpwd();
 			}
 			
 			//盐值加密  即把用户名加进去   再把123MD5加密
-			ByteSource credentialsSalt = ByteSource.Util.bytes(username);
+//			ByteSource credentialsSalt = ByteSource.Util.bytes(username);
 			//SimpleHash执行加密
-			simpleHash = new SimpleHash("MD5",pwd, credentialsSalt, 1024);
+//			simpleHash = new SimpleHash("MD5",pwd, credentialsSalt, 1024);
 			
 			// 吧simplehsh赋值给密码
-			credentials = simpleHash.toString();
+//			credentials = simpleHash.toString();
 			
 		}
 		
@@ -102,11 +104,21 @@ public class ShiroRealm extends AuthorizingRealm{
 		//6 构建 AuthenticationInfo对象并且返回  通常实现类为SimpleAuthenticationInfo
 		//这里把数据库中查询到相对应username的password返回  然后shiro  使用复杂构造器 添加MD5盐值加密
 																//	用户名			密码		  盐值(用于计算前台密码加密) realm名称 就是本类
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, credentials, credentialsSalt, realmName);
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, pwd, credentialsSalt, realmName);
 		
 		return info;
 	}
 
+	@Test
+	public void test() {
+		//盐值加密  即把用户名加进去   再把123MD5加密
+		ByteSource credentialsSalt = ByteSource.Util.bytes("zm");
+		//SimpleHash执行加密
+		SimpleHash simpleHash = new SimpleHash("MD5","123", credentialsSalt, 1024);
+		System.out.println(simpleHash.toString());
+		
+	}
+	
 	//用于授权的方法
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {

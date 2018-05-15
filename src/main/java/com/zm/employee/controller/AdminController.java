@@ -1,6 +1,9 @@
 package com.zm.employee.controller;
 
 import java.util.List;
+
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +41,11 @@ public class AdminController {
 	public Msg addAdmin(Admin admin) {
 		System.out.println(admin);
 		try {
+			//盐值加密  即把用户名加进去   再把123MD5加密
+			ByteSource credentialsSalt = ByteSource.Util.bytes(admin.getAdminname());
+			//SimpleHash执行加密
+			SimpleHash simpleHash = new SimpleHash("MD5",admin.getAdminpwd(), credentialsSalt, 1024);
+			admin.setAdminpwd(simpleHash.toString());
 			service.addAdmin(admin);
 			return Msg.success();
 		} catch (Exception e) {
