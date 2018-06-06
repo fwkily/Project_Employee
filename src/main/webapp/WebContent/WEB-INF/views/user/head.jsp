@@ -260,7 +260,7 @@
 				<li><a href="z"><span class="glyphicon glyphicon-signal"></span>
 						我的资料</a></li>
 				<li><a href="${path}/user/k"><span class="glyphicon glyphicon-user"></span>
-						模拟打卡</a></li>
+						考勤打卡</a></li>
 				<li><a href="${path }/user/t"><span
 						class="glyphicon glyphicon-home"></span> 查看任务</a></li>
 				<li><a href="w"><span class="glyphicon glyphicon-user"></span>

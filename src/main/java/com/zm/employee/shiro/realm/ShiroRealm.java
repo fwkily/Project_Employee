@@ -103,7 +103,7 @@ public class ShiroRealm extends AuthorizingRealm{
 		 */
 		//6 构建 AuthenticationInfo对象并且返回  通常实现类为SimpleAuthenticationInfo
 		//这里把数据库中查询到相对应username的password返回  然后shiro  使用复杂构造器 添加MD5盐值加密
-																//	用户名			密码		  盐值(用于计算前台密码加密) realm名称 就是本类
+																//	用户名list  密码		  盐值(用于计算前台密码加密) realm名称 就是本类
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, pwd, credentialsSalt, realmName);
 		
 		return info;
